@@ -7,8 +7,8 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 type Tokens = {
-  accessToken: string;
-  refreshToken: string;
+  access_token: string;
+  refresh_token: string;
 };
 
 @Injectable()
@@ -60,10 +60,11 @@ export class UsersService {
         secret: 'jwt_secret_refresh',
       });
       const payload = { sub: user._id, email: user.email, name: user.name };
-      const {accessToken, refreshToken} = await this.generateTokens(payload);
+      const { access_token, refresh_token } =
+        await this.generateTokens(payload);
       return {
-        accessToken,
-        refreshToken,
+        access_token,
+        refresh_token,
         status: 200,
         message: 'refesh token successfully',
       };
@@ -72,7 +73,7 @@ export class UsersService {
     }
   }
 
-  private async generateTokens(): Promise<Tokens> {
+  private async generateTokens(user): Promise<Tokens> {
     const jwtPayload = { sub: user._id, email: user.email, name: user.name };
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtSvc.signAsync(jwtPayload, {
@@ -86,8 +87,8 @@ export class UsersService {
     ]);
 
     return {
-      accessToken: accessToken,
-      refreshToken: refreshToken,
+      access_token: accessToken,
+      refresh_token: refreshToken,
     };
   }
 }
