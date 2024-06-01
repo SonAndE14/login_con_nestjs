@@ -1,11 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+//import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './entities/user.entity';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+
 type Tokens = {
   access_token: string;
   refresh_token: string;
@@ -13,7 +14,10 @@ type Tokens = {
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private usermodel: Model<UserDocument>, private jwtSvc: JwtService) {}
+  constructor(
+    @InjectModel(User.name) private usermodel: Model<UserDocument>,
+    private jwtSvc: JwtService,
+  ) {}
   async create(createUserDto: CreateUserDto): Promise<User> {
     try {
       const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
@@ -66,10 +70,11 @@ export class UsersService {
         access_token,
         refresh_token,
         status: 200,
-        message: 'refesh token successfully',
+        menssage: 'refesh token successfully',
       };
     } catch (error) {
-      throw new HttpException('ERROR refresh token', HttpStatus.UNAUTHORIZED);
+      console.log(error);
+      throw new HttpException('ERROR desconocido', HttpStatus.UNAUTHORIZED);
     }
   }
 
