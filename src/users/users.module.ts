@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { userSchema, user } from './entities/user.entity';
+import { UserSchema, User } from './entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 
 @Module({
@@ -15,7 +15,8 @@ import { JwtService } from '@nestjs/jwt';
       signOptions: { expiresIn: '1d' },
     }),
     */
-    MongooseModule.forFeature([{name: user.name, schema: userSchema }])],
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+  ],
   controllers: [UsersController],
   providers: [UsersService, JwtService],
 })
