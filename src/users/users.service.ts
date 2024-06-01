@@ -87,7 +87,7 @@ export class UsersService {
       }),
       this.jwtSvc.signAsync(jwtPayload, {
         secret: 'jwt_secret_refresh',
-        expiresIn: '7d',
+        expiresIn: '1d',
       }),
     ]);
 
