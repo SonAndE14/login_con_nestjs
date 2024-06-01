@@ -73,7 +73,6 @@ export class UsersService {
         menssage: 'refesh token successfully',
       };
     } catch (error) {
-      console.log(error);
       throw new HttpException('ERROR desconocido', HttpStatus.UNAUTHORIZED);
     }
   }
