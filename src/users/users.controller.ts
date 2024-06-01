@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
+import { Controller, Post, Body, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import * as request from 'supertest';
+// import { UpdateUserDto } from './dto/update-user.dto';
+
 
 @Controller('users')
 export class UsersController {
@@ -19,9 +19,8 @@ export class UsersController {
   }
 
   @Post('refresh')
-  refreshToken(@Req()) request: Request {
-    const [type, token]= reques-headers['autorization']?.split('') || []
-    this.usersService.refreshToken(token);
+  refreshToken(@Req() request: Request) {
+    const [type, token] = request.headers['autorization']?.split('') || [];
+    return this.usersService.refreshToken(token);
   }
-
 }
